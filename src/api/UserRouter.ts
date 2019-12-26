@@ -30,7 +30,8 @@ export class UserRouter {
                 existing
                     ? res.status(409).send("username not available")
                     : this.createUser(req.body.username, req.body.password, res)
-            });
+            })
+            .catch(error => res.status(500).send("Error: " + error));
     }
 
     private createUser = async (username, password, res) =>

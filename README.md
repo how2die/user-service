@@ -27,6 +27,12 @@ kubectl apply -f deployment.yaml
 
 ## Development
 
+To install dependendency:
+
+```
+npm install
+```
+
 To start development server, run:
 ```
 npm run start:watch
