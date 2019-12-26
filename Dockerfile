@@ -1,14 +1,12 @@
 FROM node:lts-alpine AS build
 WORKDIR /usr/src/app
 COPY package*.json ./
-
-# When compiling alpine on Windows:
-#run apk --no-cache add --virtual native-deps \
-#  g++ gcc libgcc libstdc++ linux-headers make python && \
-#  npm install --quiet node-gyp -g &&\
-#  npm install --quiet && \
-#  apk del native-deps
-
+# Install Python on alpine
+RUN apk --no-cache add --virtual native-deps \
+  g++ gcc libgcc libstdc++ linux-headers make python && \
+  npm install --quiet node-gyp -g &&\
+  npm install --quiet && \
+  apk del native-deps
 RUN npm install --only=production
 COPY . .
 
