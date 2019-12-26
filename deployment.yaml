@@ -1,0 +1,55 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  labels:
+    app: user-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    protocol: TCP
+  selector:
+    app: user-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+spec:
+  selector:
+    matchLabels:
+      app: user-service
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service
+        image: how2die/user-service
+        env:
+        - name: NODE_ENV 
+          value: production
+        - name: PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: user-private-key
+              key: private-key
+        - name: DB_DATABASE
+          value: user
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: username
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: password
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always
