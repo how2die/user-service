@@ -28,5 +28,9 @@
     "@types/sequelize": "^4.28.8",
     "nodemon": "^2.0.2",
     "typescript": "^3.7.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/how2die/user-service.git"
   }
 }
