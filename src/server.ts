@@ -1,4 +1,5 @@
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import express from 'express';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -25,7 +26,7 @@ const app = express();
 app.use(helmet());
 app.use(morgan('combined'));
 app.use(bodyParser.json());
-//app.use(cors()); // TODO: Needed?
+app.use(cors());
 
 app.use('/api/users', userRouter.getRouter());
 app.use('/api/tokens', tokenRouter.getRouter());
